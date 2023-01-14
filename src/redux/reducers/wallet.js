@@ -10,14 +10,14 @@ const wallet = (state = WALLET_INITIAL_STATE, action) => {
   switch (action.type) {
   case 'SAVE_WALLET_CURRENCY':
     return { ...state,
-      currency: payload };
+      currencies: action.payload };
   case 'SAVE_WALLET_EXPENSES':
     return { ...state,
-      expenses: payload };
+      expenses: action.payload };
   case 'SAVE_WALLET_EDIT':
     return { ...state,
-      editor: payload.editor,
-      idToEdit: payload.idToEdit,
+      editor: action.payload.editor,
+      idToEdit: action.payload.idToEdit,
     };
   default:
     return state;
