@@ -1,8 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import saveUser from '../redux/actions';
+import { saveUser } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -23,8 +22,8 @@ class Login extends React.Component {
     this.setState({ redirectToWallet: true });
   };
 
-  handleChanger = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => {
+  handleChanger = ({ target: { id, value } }) => {
+    this.setState({ [id]: value }, () => {
       const { inputEmail, inputPassword } = this.state;
       const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
       const testRegex = regex.test(inputEmail);
@@ -46,7 +45,7 @@ class Login extends React.Component {
         <label htmlFor="inputEmail">
           Email
           <input
-            name="inputEmail"
+            id="inputEmail"
             data-testid="email-input"
             value={ inputEmail }
             onChange={ this.handleChanger }
@@ -56,7 +55,7 @@ class Login extends React.Component {
         <label htmlFor="inputPassword">
           Senha
           <input
-            name="inputPassword"
+            id="inputPassword"
             data-testid="password-input"
             value={ inputPassword }
             onChange={ this.handleChanger }
