@@ -28,7 +28,7 @@ class Header extends Component {
                   const value = b.value * b.exchangeRates[b.currency].ask;
                   return a + value;
                 }, 0).toFixed(2)
-                : 0 }
+                : '0.00' }
             </span>
             {' '}
             <span data-testid="header-currency-field">
