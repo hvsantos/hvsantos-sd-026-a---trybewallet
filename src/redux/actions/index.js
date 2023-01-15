@@ -42,10 +42,10 @@ export const saveExpenses = (func, incState, expenses) => {
       return formatExpense;
     })
     .then((newExpense) => {
-      expenses.push(newExpense);
+      const newArr = [...expenses, newExpense];
       func({
         type: SAVE_WALLET_EXPENSES,
-        payload: setIds(expenses),
+        payload: setIds(newArr),
       });
     });
 };
