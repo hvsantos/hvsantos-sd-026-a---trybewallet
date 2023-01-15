@@ -23,8 +23,11 @@ class Header extends Component {
             Despesa Total:
             {' '}
             <span data-testid="total-field">
-              { expenses.length !== 0
-                ? expenses.reduce((a, b) => a + b, 0)
+              { expenses.length > 0
+                ? expenses.reduce((a, b) => {
+                  const value = b.value * b.exchangeRates[b.currency].ask;
+                  return a + value;
+                }, 0).toFixed(2)
                 : 0 }
             </span>
             {' '}
