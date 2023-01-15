@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { saveAfterDelete } from '../redux/actions';
 
 class Table extends Component {
+  handleDelete = (id) => {
+    const { dispatch, expenses } = this.props;
+    const newArr = [...expenses];
+    const testArr = newArr.filter((expens) => expens.id !== id);
+    dispatch(saveAfterDelete(testArr));
+  };
+
   render() {
     const { expenses } = this.props;
     const arrTable = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
-    console.log(expenses);
     return (
       <table>
         <thead>
@@ -30,11 +37,14 @@ class Table extends Component {
                   <button
                     type="button"
                     onClick={ () => {} }
+                    data-testid="edit-btn"
                   >
                     Editar
                   </button>
                   <button
                     type="button"
+                    onClick={ () => this.handleDelete(id) }
+                    data-testid="delete-btn"
                   >
                     Excluir
                   </button>
