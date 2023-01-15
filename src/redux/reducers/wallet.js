@@ -19,6 +19,12 @@ const wallet = (state = WALLET_INITIAL_STATE, action) => {
       editor: action.payload.editor,
       idToEdit: action.payload.idToEdit,
     };
+  case 'COMPLETE_EDIT':
+    return { ...state,
+      editor: false,
+      idToEdit: '',
+      expenses: action.payload,
+    };
   default:
     return state;
   }

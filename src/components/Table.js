@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveAfterDelete } from '../redux/actions';
+import { saveAfterDelete, saveIdEdit } from '../redux/actions';
 
 class Table extends Component {
   handleDelete = (id) => {
@@ -8,6 +8,11 @@ class Table extends Component {
     const newArr = [...expenses];
     const testArr = newArr.filter((expens) => expens.id !== id);
     dispatch(saveAfterDelete(testArr));
+  };
+
+  handleEdit = (id) => {
+    const { dispatch } = this.props;
+    dispatch(saveIdEdit(id));
   };
 
   render() {
@@ -36,7 +41,7 @@ class Table extends Component {
                 <td>
                   <button
                     type="button"
-                    onClick={ () => {} }
+                    onClick={ () => this.handleEdit(id) }
                     data-testid="edit-btn"
                   >
                     Editar

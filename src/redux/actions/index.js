@@ -5,6 +5,8 @@ import setIds from '../../helper/setIds';
 const SAVE_USER_EMAIL = 'SAVE_USER_EMAIL';
 const SAVE_WALLET_CURRENCY = 'SAVE_WALLET_CURRENCY';
 const SAVE_WALLET_EXPENSES = 'SAVE_WALLET_EXPENSES';
+const SAVE_WALLET_EDIT = 'SAVE_WALLET_EDIT';
+const COMPLETE_EDIT = 'COMPLETE_EDIT';
 
 export const saveUser = (email) => ({
   type: SAVE_USER_EMAIL,
@@ -56,3 +58,15 @@ export const saveAfterDelete = (arr) => (
     payload: (arr),
   }
 );
+
+export const saveIdEdit = (id) => (
+  {
+    type: SAVE_WALLET_EDIT,
+    payload: {
+      editor: true,
+      idToEdit: id,
+    },
+  }
+);
+
+export const finalizeEdit = (expenses) => ({ type: COMPLETE_EDIT, payload: expenses });
