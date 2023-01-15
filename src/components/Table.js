@@ -1,28 +1,56 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Table extends Component {
   render() {
+    const { expenses } = this.props;
+    const arrTable = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
+      'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
+    console.log(expenses);
     return (
       <table>
         <thead>
           <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir.</th>
+            { arrTable.map((elem) => <th key={ elem }>{elem}</th>) }
           </tr>
         </thead>
         <tbody>
-          {/* fazer o resto */}
+          { expenses.length > 0 && expenses
+            .map(({ description, id, tag, method, value, currency, exchangeRates }) => (
+              <tr key={ `${description}${id}` }>
+                <td>{description}</td>
+                <td>{tag}</td>
+                <td>{method}</td>
+                <td>{Number(value).toFixed(2)}</td>
+                <td>{currency}</td>
+                <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
+                <td>{(value * Number(exchangeRates[currency].ask)).toFixed(2)}</td>
+                <td>{ exchangeRates[currency].name }</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={ () => {} }
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            )) }
         </tbody>
       </table>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = ({ wallet: { expenses } }) => ({
+  expenses,
+});
+
+export default connect(mapStateToProps)(Table);
+
+Table.propTypes = {}.isRequired;
