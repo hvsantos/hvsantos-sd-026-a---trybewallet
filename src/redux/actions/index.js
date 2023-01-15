@@ -49,3 +49,10 @@ export const saveExpenses = (func, incState, expenses) => {
       });
     });
 };
+
+export const saveAfterDelete = (arr) => (
+  {
+    type: SAVE_WALLET_EXPENSES,
+    payload: (arr),
+  }
+);
