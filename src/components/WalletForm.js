@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { saveCurrency } from '../redux/actions/index';
+import { saveCurrency, saveExpenses } from '../redux/actions/index';
+import initialState from '../helper/initialState';
 
 class WalletForm extends Component {
-  state = {
-    expenseValue: '',
-    expenseCurrency: '',
-    expensePayMethod: 'Dinheiro',
-    expenseCategory: 'Alimentação',
-    expenseDescription: '',
-  };
+  state = initialState;
 
   async componentDidMount() {
     const { dispatch } = this.props;
     await saveCurrency(dispatch);
-    this.setState({ expenseCurrency: 'USD' });
   }
 
   handleChanger = ({ target: { id, value } }) => {
     this.setState({ [id]: value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    const entState = this.state;
+    const { dispatch, expenses } = this.props;
+
+    saveExpenses(dispatch, entState, expenses);
+    this.setState(initialState);
   };
 
   render() {
@@ -28,7 +32,6 @@ class WalletForm extends Component {
     const { expenseValue, expenseCurrency, expensePayMethod,
       expenseCategory, expenseDescription } = this.state;
     const { currencies } = this.props;
-    console.log(currencies);
 
     if (!currencies) {
       return (
@@ -102,7 +105,10 @@ class WalletForm extends Component {
             value={ expenseDescription }
           />
         </label>
-        <button type="submit">
+        <button
+          type="submit"
+          onClick={ this.handleSubmit }
+        >
           Adicionar despesa
         </button>
       </div>
@@ -110,8 +116,9 @@ class WalletForm extends Component {
   }
 }
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
+const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   currencies,
+  expenses,
 });
 
 export default connect(mapStateToProps)(WalletForm);
